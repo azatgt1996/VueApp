@@ -170,20 +170,25 @@ table td {
 }
 
 table tbody {
-  /* display: block;
-  height: 74vh;
-  overflow-y: scroll; */
   font-size: 14px;
 }
-
-/* table thead, table tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-} */
 
 .status-col {
   border-radius: 15px;
   text-align: center;
   padding: 7px 10px;
+}
+
+.pagination-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  background: white;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.cur-page {
+  color: blue;
 }

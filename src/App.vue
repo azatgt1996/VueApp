@@ -1,11 +1,20 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import data from './data.json'
 
-const records = ref(data.sessions)
+const records = ref(data.sessions ?? [])
+
+const curPage = ref(0)
+const search = ref('')
+
+const filtered = computed(() => {
+  if (search.value.trim()) return records.value.filter(it => it.module.includes())
+  return records.value
+  //return records.value.slice(curPage.value*11, (curPage.value+1)*11)
+})
 
 const dateFormat = (rec) => {
-  const time = rec.start.slice(11,16) + ' - ' + rec.end.slice(11,16)
+  const time = rec.start.slice(11, 16) + ' - ' + rec.end.slice(11,16)
   return new Date(rec.start).toLocaleDateString() + ', ' + time
 }
 
@@ -162,7 +171,7 @@ const statusColor = {
         </span>
         <div style="float: right; display: flex;">
           <label id="search-input">
-            <input type="text" placeholder="Поиск">
+            <input type="text" placeholder="Поиск" v-model="search">
           </label>
           <button class="icon-btn">
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -197,7 +206,7 @@ const statusColor = {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(rec, i) in records" style="height: 60px" :style="`background: ${i%2==1 ? '#F4F4F4' : 'white'}`">
+          <tr v-for="(rec, i) in records.slice(curPage*11, (curPage+1)*11)" style="height: 60px" :style="`background: ${i%2==1 ? '#F4F4F4' : 'white'}`">
             <td style="padding-left: 10px;">{{ dateFormat(rec) }}</td>
             <td>
               <span class="status-col" :style="{background: statusColor[rec.status.name]}">{{ statusType[rec.status.name] }}</span>
@@ -209,7 +218,20 @@ const statusColor = {
           </tr>
         </tbody>
         <tfoot style="height: 50px;">
-          <!-- <div style="width: 100%">234</div> -->
+          <td colspan="6" style=" margin-top: 10px;">
+            <button class="pagination-btn" @click="curPage && curPage--" :class="{'cur-page': curPage===num-1}">
+              <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1477 15.0227C11.9281 15.2424 11.5719 15.2424 11.3523 15.0227L5.72725 9.39775C5.50758 9.17808 5.50758 8.82192 5.72725 8.60225L11.3523 2.97725C11.5719 2.75758 11.9281 2.75758 12.1477 2.97725C12.3674 3.19692 12.3674 3.55308 12.1477 3.77275L6.92049 9L12.1477 14.2273C12.3674 14.4469 12.3674 14.8031 12.1477 15.0227Z" fill="#999999"/>
+              </svg>
+            </button>
+            <button class="pagination-btn" v-for="num in Math.ceil(records.length/11)"
+                    @click="curPage = num-1" :class="{'cur-page': curPage===num-1}">{{ num }}</button>
+            <button class="pagination-btn" @click="curPage != Math.floor(records.length/11) && curPage++" :class="{'cur-page': curPage===num-1}">
+              <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.85225 2.97725C7.07192 2.75758 7.42808 2.75758 7.64775 2.97725L13.2727 8.60225C13.4924 8.82192 13.4924 9.17808 13.2727 9.39775L7.64775 15.0227C7.42808 15.2424 7.07192 15.2424 6.85225 15.0227C6.63258 14.8031 6.63258 14.4469 6.85225 14.2273L12.0795 9L6.85225 3.77275C6.63258 3.55308 6.63258 3.19692 6.85225 2.97725Z" fill="#999999"/>
+              </svg>
+            </button>
+          </td>
         </tfoot>
       </table>
     </div>
