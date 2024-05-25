@@ -147,7 +147,7 @@ const statusColor = {
             <th style="width: 200px; padding-right: 10px">Группа</th>
           </tr>
         </thead>
-        <tbody v-if="filtered.length">
+        <tbody>
           <tr v-for="(rec, i) in page" style="height: 60px" :style="{background: i%2==1 ? '#F4F4F4' : 'white'}">
             <td style="padding-left: 10px">{{ dateFormat(rec) }}</td>
             <td>
@@ -160,9 +160,11 @@ const statusColor = {
             <td>{{ rec.rooms.map(r => r.name).join(', ') }}</td>
             <td style="padding-right: 10px">{{ rec.groups.map(r => r.name).join(', ') }}</td>
           </tr>
+          <tr v-if="!filtered.length">
+            <td colspan="6" style="text-align: center; padding: 10px 0;">Нет данных</td>
+          </tr>
         </tbody>
-        <div v-else style="text-align: center">Нет данных</div>
-        <tfoot style="height: 50px">
+        <tfoot v-if="filtered.length" style="height: 50px">
           <td colspan="6" style="margin-top: 10px">
             <div class="pagination" style="display: flex">
               <button @click="curPage && curPage--">
