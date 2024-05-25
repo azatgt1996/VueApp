@@ -43,6 +43,10 @@
   margin-right: 10px;
 }
 
+.nav-item:focus svg {
+  fill: white;
+}
+
 .nav-footer {
   position: absolute;
   bottom: 0;
