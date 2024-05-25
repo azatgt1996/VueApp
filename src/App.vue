@@ -1,22 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import data from './data.json'
-import ILogo from './assets/icons/logo.svg'
-import ISchedule from './assets/icons/schedule.svg'
-import ILessons from './assets/icons/lessons.svg'
-import IRoom from './assets/icons/room.svg'
-import IUser from './assets/icons/user.svg'
-import ILessonGroup from './assets/icons/lesson-group.svg'
-import IDevice from './assets/icons/device.svg'
-import ISetting from './assets/icons/setting.svg'
-import IArchive from './assets/icons/archive.svg'
-import ILogout from './assets/icons/logout.svg'
-import ISort from './assets/icons/sort.svg'
-import IFilter from './assets/icons/filter.svg'
-import IFlagRu from './assets/icons/flag-ru.svg'
-import IArrowDown from './assets/icons/arrow-down.svg'
-import IArrowLeft from './assets/icons/arrow-left.svg'
-import IArrowRight from './assets/icons/arrow-right.svg'
+import Icon from './components/Icon.vue';
 
 
 const records = ref(data.sessions ?? [])
@@ -65,33 +50,33 @@ const statusColor = {
 <template>
   <div class="sidebar">
     <div class="nav-header">
-      <ILogo style="align-self: center"/>
+      <Icon name="logo" style="align-self: center"/>
       <span class="logo-text">Сим Центр</span>
     </div>
     <div class="nav-main">
       <div class="nav-item" tabindex="1">
-        <ISchedule/>Расписание
+        <Icon name="schedule"/>Расписание
       </div>
       <div class="nav-item" tabindex="2">
-        <ILessons/>Учебные сессии
+        <Icon name="lessons"/>Учебные сессии
       </div>
       <div class="nav-item" tabindex="3">
-        <IRoom/>Список комнат
+        <Icon name="room"/>Список комнат
       </div>
       <div class="nav-item" tabindex="4">
-        <IUser/>Пользователи
+        <Icon name="user"/>Пользователи
       </div>
       <div class="nav-item" tabindex="5">
-        <ILessonGroup/>Учебные группы
+        <Icon name="lesson-group"/>Учебные группы
       </div>
       <div class="nav-item" tabindex="6">
-        <IDevice/>Список устройств
+        <Icon name="device"/>Список устройств
       </div>
       <div class="nav-item" tabindex="7">
-        <ISetting/>Настройки системы
+        <Icon name="setting"/>Настройки системы
       </div>
       <div class="nav-item" tabindex="8">
-        <IArchive/>Архив
+        <Icon name="archive"/>Архив
       </div>
     </div>
     <div class="nav-footer">
@@ -103,12 +88,12 @@ const statusColor = {
         <div class="user-icon">БМ</div>
       </div>
       <div class="nav-item" style="margin: 5px 0" tabindex="9">
-        <ILogout/>Выйти
+        <Icon name="logout"/>Выйти
       </div>
       <div class="lang-combobox">
-        <IFlagRu/>
+        <Icon name="flag-ru"/>
         <span style="margin-left: 10px; vertical-align: super;">Русский</span>
-        <IArrowDown style="float: right"/>
+        <Icon name="arrow-down" style="float: right"/>
       </div>
       <div class="version-info">Версия 1.02</div>
     </div>
@@ -125,10 +110,10 @@ const statusColor = {
             <input type="text" placeholder="Поиск" v-model="search">
           </label>
           <button class="icon-btn">
-            <IFilter/>
+            <Icon name="filter"/>
           </button>
           <button class="icon-btn">
-            <ISort/>
+            <Icon name="sort"/>
           </button>
           <button class="add-btn">Создать</button>
         </div>
@@ -138,7 +123,7 @@ const statusColor = {
           <tr>
             <th style="width: 210px; padding-left: 10px;">
               <span>Дата и время</span>
-              <IArrowDown style="float: right; margin-right: 60px"/>
+              <Icon name="arrow-down" style="float: right; margin-right: 60px"/>
             </th>
             <th style="width: 145px">Статус</th>
             <th>Название учебного модуля</th>
@@ -168,12 +153,12 @@ const statusColor = {
           <td colspan="6" style="margin-top: 10px">
             <div class="pagination" style="display: flex">
               <button @click="curPage && curPage--">
-                <IArrowLeft/>
+                <Icon name="arrow-left"/>
               </button>
               <button v-for="num in pageNum" @click="curPage = num-1"
                       :class="{'cur-page': curPage===num-1}">{{ num }}</button>
               <button @click="curPage != pageNum-1 && curPage++">
-                <IArrowRight/>
+                <Icon name="arrow-right"/>
               </button>
             </div>
           </td>
