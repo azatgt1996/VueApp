@@ -113,6 +113,9 @@ const statusColor = {
       <div class="version-info">Версия 1.02</div>
     </div>
   </div>
+  <!-- <button class="collapse">
+    <IArrowLeft/>
+  </button> -->
   <div class="back-panel">
     <div class="content">
       <div class="table-nav">
@@ -131,41 +134,43 @@ const statusColor = {
         </div>
       </div>
       <table class="table-border" style="width: 100%">
-        <thead style="height: 50px;">
+        <thead style="height: 50px">
           <tr>
-            <th style="width: 210px; text-align: left; padding-left: 10px;">
+            <th style="width: 210px; padding-left: 10px;">
               <span>Дата и время</span>
               <IArrowDown style="float: right; margin-right: 60px"/>
             </th>
-            <th style="width: 145px; text-align: left;">Статус</th>
-            <th style="text-align: left;">Название учебного модуля</th>
-            <th style="width: 170px; text-align: left;">Тип сессии</th>
-            <th style="width: 220px; text-align: left;">Комната</th>
-            <th style="width: 200px; text-align: left; padding-right: 10px">Группа</th>
+            <th style="width: 145px">Статус</th>
+            <th>Название учебного модуля</th>
+            <th style="width: 170px">Тип сессии</th>
+            <th style="width: 220px">Комната</th>
+            <th style="width: 200px; padding-right: 10px">Группа</th>
           </tr>
         </thead>
         <tbody v-if="filtered.length">
-          <tr v-for="(rec, i) in page" style="height: 60px" :style="`background: ${i%2==1 ? '#F4F4F4' : 'white'}`">
-            <td style="padding-left: 10px;">{{ dateFormat(rec) }}</td>
+          <tr v-for="(rec, i) in page" style="height: 60px" :style="{background: i%2==1 ? '#F4F4F4' : 'white'}">
+            <td style="padding-left: 10px">{{ dateFormat(rec) }}</td>
             <td>
-              <span class="status-col" :style="{background: statusColor[rec.status.name]}">{{ statusType[rec.status.name] }}</span>
+              <span class="status-col" :style="{background: statusColor[rec.status.name]}">
+                {{ statusType[rec.status.name] }}
+              </span>
             </td>
             <td>{{ rec.module }}</td>
             <td>{{ sessionType[rec.type.name] }}</td>
             <td>{{ rec.rooms.map(r => r.name).join(', ') }}</td>
-            <td style="padding-right: 10px;">{{ rec.groups.map(r => r.name).join(', ') }}</td>
+            <td style="padding-right: 10px">{{ rec.groups.map(r => r.name).join(', ') }}</td>
           </tr>
         </tbody>
         <div v-else style="text-align: center">Нет данных</div>
         <tfoot style="height: 50px">
-          <td colspan="6" style="margin-top: 10px;">
-            <div style="display: flex;">
-              <button class="pagination-btn" @click="curPage && curPage--" :class="{'cur-page': curPage===num-1}">
+          <td colspan="6" style="margin-top: 10px">
+            <div class="pagination" style="display: flex">
+              <button @click="curPage && curPage--">
                 <IArrowLeft/>
               </button>
-              <button class="pagination-btn" v-for="num in pageNum"
-                      @click="curPage = num-1" :class="{'cur-page': curPage===num-1}">{{ num }}</button>
-              <button class="pagination-btn" @click="curPage != pageNum-1 && curPage++" :class="{'cur-page': curPage===num-1}">
+              <button v-for="num in pageNum" @click="curPage = num-1"
+                      :class="{'cur-page': curPage===num-1}">{{ num }}</button>
+              <button @click="curPage != pageNum-1 && curPage++">
                 <IArrowRight/>
               </button>
             </div>
