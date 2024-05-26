@@ -1,4 +1,4 @@
-# Vue 3 + Vite
+# Vue 3 + Vite + SCSS + Router
 
 Для запуска проекта выполнить:
 - npm install
