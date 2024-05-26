@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div v-show="!isCollapsed" class="sidebar">
     <RouterLink to="/" class="nav-header">
       <Icon name="logo" style="align-self: center" />
       <span class="logo-text">Сим Центр</span>
@@ -51,15 +51,36 @@
       <div class="version-info">Версия 1.02</div>
     </div>
   </div>
+  <button class="collapse" @click="isCollapsed = !isCollapsed"
+          :title="!isCollapsed ? 'Скрыть' : 'Показать'">
+    <Icon v-show="!isCollapsed" name="arrow-left" style="fill: white"/>
+    <Icon v-show="isCollapsed" name="arrow-right" style="fill: white"/>
+  </button>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import Icon from '@/ui/Icon.vue';
+
+const isCollapsed = ref(false)
 
 </script>
 
 <style lang="scss">
 @import '@/css/vars.scss';
+
+.collapse {
+  height: 19px;
+  width: 19px;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: black;
+  cursor: pointer;
+  position: relative;
+  top: 10px;
+  left: 12px;
+}
 
 .sidebar {
   width: 290px;
