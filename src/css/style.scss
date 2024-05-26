@@ -1,0 +1,216 @@
+@import './vars.scss';
+
+body {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 290px;
+
+  .nav-header {
+    display: flex;
+    justify-content: center;
+    height: 85px;
+
+    .logo-text {
+      font-size: 24px;
+      align-self: center;
+      margin-left: 10px;
+      font-weight: 800;
+    }
+  }
+
+  .nav-main {
+    padding: 10px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 10px;
+    cursor: pointer;
+
+    svg {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background: $bg-color;
+      border-radius: 15px;
+    }
+    
+    &:focus {
+      background: $primary-color;
+      color: white;
+      border-radius: 15px;
+
+      svg {
+        fill: white;
+      }
+    }
+  }
+}
+
+.nav-footer {
+  position: absolute;
+  bottom: 0;
+  margin: 8px;
+}
+
+.user-panel {
+  display: flex;
+  padding: 10px;
+  border-radius: 14px;
+  box-shadow: $border-color 0 0 10px;
+  margin-bottom: 10px;
+}
+
+.user-icon {
+  background: $primary-color;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 48px;
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  margin-left: 10px;
+}
+
+.lang-combobox {
+  display: block;
+  height: 24px;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.version-info {
+  color: grey;
+  margin-top: 18px;
+}
+
+.back-panel {
+  width: 100%;
+  background: $bg-color;
+
+  .content {
+    margin: 7px 7px 0 7px;
+    background: white;
+    border-radius: 10px 10px 0 0;
+    height: calc(100% - 38px);
+    padding: 15px;
+
+    .table-nav {
+      display: block;
+
+      #search-input {
+        position: relative;
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 10px;
+          top: 8px;
+          height: 24px;
+          width: 24px;
+          background: url("/src/assets/icons/search.svg");
+        }
+
+        input {
+          padding: 0 20px 0 40px;
+          border-radius: 10px;
+          border: 1px solid $border-color;
+          font-size: 18px;
+          height: 42px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: $bg-color;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      .add-btn {
+        height: 40px;
+        border-radius: 10px;
+        border: none;
+        background: $primary-color;
+        font-size: 15px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        padding: 0 17px;
+        margin-left: 14px;
+      }
+    }
+
+    table.table-border {
+      border-radius: 15px;
+      border: 2px solid #E8EAEC;
+      margin-top: 28px;
+      background: #F5F7F9;
+      width: 100%;
+      border-spacing: 0px;
+
+      td {
+        padding: 0 5px;
+      }
+
+      th {
+        text-align: left;
+      }
+
+      tbody {
+        font-size: 14px;
+
+        .status-col {
+          border-radius: 15px;
+          text-align: center;
+          padding: 7px 10px;
+        }
+      }
+
+      .pagination button {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid rgba(0,0,0,.1);
+        background: white;
+        cursor: pointer;
+        margin-left: 5px;
+
+        &:hover {
+          background: $bg-color;
+        }
+      }
+
+      .cur-page {
+        color: $primary-color;
+        border: 1px solid $primary-color !important;
+      }
+    }
+  }
+}

@@ -3,7 +3,6 @@ import { ref, computed } from 'vue';
 import data from './data.json'
 import Icon from './components/Icon.vue';
 
-
 const records = ref(data.sessions ?? [])
 
 const curPage = ref(0)
@@ -27,22 +26,16 @@ const dateFormat = (rec) => {
   return new Date(rec.start).toLocaleDateString() + ', ' + time
 }
 
-const sessionType = {
+const session = {
   accreditation: 'Аккредитация',
   lesson: 'Урок',
   examination: 'Экзамен',
 }
 
-const statusType = {
-  planned: 'Запланировано',
-  completed: 'Завершено',
-  canceled: 'Отменено',
-}
-
-const statusColor = {
-  planned: '#AFBFF5',
-  completed: '#91C893',
-  canceled: '#FFDAA1',
+const status = {
+  planned: {text: 'Запланировано', color: '#AFBFF5'},
+  completed: {text: 'Завершено', color: '#91C893'},
+  canceled: {text: 'Отменено', color: '#FFDAA1'},
 }
 
 </script>
@@ -98,9 +91,6 @@ const statusColor = {
       <div class="version-info">Версия 1.02</div>
     </div>
   </div>
-  <!-- <button class="collapse">
-    <IArrowLeft/>
-  </button> -->
   <div class="back-panel">
     <div class="content">
       <div class="table-nav">
@@ -118,7 +108,7 @@ const statusColor = {
           <button class="add-btn">Создать</button>
         </div>
       </div>
-      <table class="table-border" style="width: 100%">
+      <table class="table-border">
         <thead style="height: 50px">
           <tr>
             <th style="width: 210px; padding-left: 10px;">
@@ -136,12 +126,12 @@ const statusColor = {
           <tr v-for="(rec, i) in page" style="height: 60px" :style="{background: i%2==1 ? '#F4F4F4' : 'white'}">
             <td style="padding-left: 10px">{{ dateFormat(rec) }}</td>
             <td>
-              <span class="status-col" :style="{background: statusColor[rec.status.name]}">
-                {{ statusType[rec.status.name] }}
+              <span class="status-col" :style="{background: status[rec.status.name].color}">
+                {{ status[rec.status.name].text }}
               </span>
             </td>
             <td>{{ rec.module }}</td>
-            <td>{{ sessionType[rec.type.name] }}</td>
+            <td>{{ session[rec.type.name] }}</td>
             <td>{{ rec.rooms.map(r => r.name).join(', ') }}</td>
             <td style="padding-right: 10px">{{ rec.groups.map(r => r.name).join(', ') }}</td>
           </tr>
