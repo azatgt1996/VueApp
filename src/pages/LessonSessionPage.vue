@@ -17,20 +17,17 @@
   <table class="table-border">
     <thead style="height: 50px">
       <tr>
-        <th style="width: 210px; padding-left: 10px;">
-          <span>Дата и время</span>
-          <Icon name="arrow-down" style="float: right; margin-right: 60px" />
-        </th>
-        <th style="width: 145px">Статус</th>
-        <th>Название учебного модуля</th>
-        <th style="width: 170px">Тип сессии</th>
-        <th style="width: 220px">Комната</th>
-        <th style="width: 200px; padding-right: 10px">Группа</th>
+        <SortColumn label="Дата и время" width="170"/>
+        <SortColumn label="Статус" width="130"/>
+        <SortColumn label="Название учебного модуля"/>
+        <SortColumn label="Тип сессии" width="150"/>
+        <SortColumn label="Комната" width="220"/>
+        <SortColumn label="Группа" width="200"/>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(rec, i) in page" style="height: 60px" :style="{ background: i % 2 == 1 ? '$bg-color' : 'white' }">
-        <td style="padding-left: 10px">{{ dateFormat(rec) }}</td>
+        <td>{{ dateFormat(rec) }}</td>
         <td>
           <span class="status-col" :style="{ background: status[rec.status.name].color }">
             {{ status[rec.status.name].text }}
@@ -39,7 +36,7 @@
         <td>{{ rec.module }}</td>
         <td>{{ session[rec.type.name] }}</td>
         <td>{{ rec.rooms.map(r => r.name).join(', ') }}</td>
-        <td style="padding-right: 10px">{{ rec.groups.map(r => r.name).join(', ') }}</td>
+        <td>{{ rec.groups.map(r => r.name).join(', ') }}</td>
       </tr>
       <tr v-if="!filtered.length">
         <td colspan="6" style="text-align: center; padding: 10px 0;">Нет данных</td>
@@ -67,6 +64,7 @@
 import { ref, computed } from 'vue';
 import data from '@/data.json'
 import Icon from '@/ui/Icon.vue';
+import SortColumn from '@/components/SortColumn.vue';
 
 const records = ref(data.sessions ?? [])
 
@@ -169,11 +167,7 @@ table.table-border {
   border-spacing: 0px;
 
   td {
-    padding: 0 5px;
-  }
-
-  th {
-    text-align: left;
+    padding: 0 10px;
   }
 
   tbody {
@@ -190,7 +184,7 @@ table.table-border {
     width: 30px;
     height: 30px;
     border-radius: 8px;
-    border: 1px solid rgba(0,0,0,.1);
+    border: 1px solid rgba(0, 0, 0, .1);
     background: white;
     cursor: pointer;
     margin-left: 5px;

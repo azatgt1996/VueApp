@@ -5,28 +5,28 @@
       <span class="logo-text">Сим Центр</span>
     </RouterLink>
     <div class="nav-main">
-      <RouterLink to="/schedule" class="nav-item" tabindex="1">
+      <RouterLink to="/schedule" class="nav-item">
         <Icon name="schedule" />Расписание
       </RouterLink>
-      <RouterLink to="/lesson-session" class="nav-item" tabindex="2">
+      <RouterLink to="/lesson-session" class="nav-item">
         <Icon name="lessons" />Учебные сессии
       </RouterLink>
-      <RouterLink to="/room-list" class="nav-item" tabindex="3">
+      <RouterLink to="/room-list" class="nav-item">
         <Icon name="room" />Список комнат
       </RouterLink>
-      <RouterLink to="/users" class="nav-item" tabindex="4">
+      <RouterLink to="/users" class="nav-item">
         <Icon name="user" />Пользователи
       </RouterLink>
-      <RouterLink to="/lesson-groups" class="nav-item" tabindex="5">
+      <RouterLink to="/lesson-groups" class="nav-item">
         <Icon name="lesson-group" />Учебные группы
       </RouterLink>
-      <RouterLink to="/device-list" class="nav-item" tabindex="6">
+      <RouterLink to="/device-list" class="nav-item">
         <Icon name="device" />Список устройств
       </RouterLink>
-      <RouterLink to="/settings" class="nav-item" tabindex="7">
+      <RouterLink to="/settings" class="nav-item">
         <Icon name="setting" />Настройки системы
       </RouterLink>
-      <RouterLink to="/archive" class="nav-item" tabindex="8">
+      <RouterLink to="/archive" class="nav-item">
         <Icon name="archive" />Архив
       </RouterLink>
     </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="user-icon">БМ</div>
       </div>
-      <RouterLink to="/login" class="nav-item" style="margin: 5px 0" tabindex="9">
+      <RouterLink to="/login" class="nav-item" style="margin: 5px 0">
         <Icon name="logout" />Выйти
       </RouterLink>
       <div class="lang-combobox">
@@ -52,9 +52,9 @@
     </div>
   </div>
   <button class="collapse" @click="isCollapsed = !isCollapsed"
-          :title="!isCollapsed ? 'Скрыть' : 'Показать'">
-    <Icon v-show="!isCollapsed" name="arrow-left" style="fill: white"/>
-    <Icon v-show="isCollapsed" name="arrow-right" style="fill: white"/>
+    :title="(!isCollapsed ? 'Скрыть' : 'Показать') + ' меню'">
+    <Icon v-show="!isCollapsed" name="arrow-left" />
+    <Icon v-show="isCollapsed" name="arrow-right" />
   </button>
 </template>
 
@@ -80,6 +80,10 @@ const isCollapsed = ref(false)
   position: relative;
   top: 10px;
   left: 12px;
+
+  svg {
+    fill: white;
+  }
 }
 
 .sidebar {
@@ -122,7 +126,7 @@ const isCollapsed = ref(false)
       background: $bg-color;
       border-radius: 15px;
     }
-    
+
     &.router-link-active {
       background: $primary-color;
       color: white;
