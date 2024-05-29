@@ -1,7 +1,7 @@
 <template>
   <div v-show="!isCollapsed" class="sidebar">
     <RouterLink to="/" class="nav-header">
-      <Icon name="logo" style="align-self: center" />
+      <Icon name="logo" />
       <span class="logo-text">Сим Центр</span>
     </RouterLink>
     <div class="nav-main">
@@ -92,13 +92,13 @@ const isCollapsed = ref(false)
   .nav-header {
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 85px;
     color: black;
     text-decoration: none;
 
     .logo-text {
       font-size: 24px;
-      align-self: center;
       margin-left: 10px;
       font-weight: 800;
     }
@@ -157,12 +157,9 @@ const isCollapsed = ref(false)
   background: $primary-color;
   border-radius: 50%;
   width: 48px;
-  height: 48px;
   text-align: center;
-  vertical-align: middle;
   line-height: 48px;
   color: white;
-  font-size: 15px;
   font-weight: 800;
   margin-left: 10px;
 }

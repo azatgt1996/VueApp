@@ -9,3 +9,13 @@ body {
   display: flex;
   height: 100vh;
 }
+
+.flex {
+  display: flex;
+}
+
+%center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

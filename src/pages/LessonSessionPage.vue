@@ -1,10 +1,8 @@
 <template>
   <div class="table-nav">
     <span style="font-weight: 700; font-size: 20px">Учебные сессии</span>
-    <div style="float: right; display: flex;">
-      <label id="search-input">
-        <input type="text" placeholder="Поиск" v-model="search">
-      </label>
+    <div class="flex">
+      <input class="search-input" type="text" placeholder="Поиск" v-model="search">
       <button class="icon-btn">
         <Icon name="filter" />
       </button>
@@ -15,7 +13,7 @@
     </div>
   </div>
   <table class="table-border">
-    <thead style="height: 50px">
+    <thead>
       <tr>
         <SortColumn label="Дата и время" width="170"/>
         <SortColumn label="Статус" width="130"/>
@@ -42,9 +40,9 @@
         <td colspan="6" style="text-align: center; padding: 10px 0;">Нет данных</td>
       </tr>
     </tbody>
-    <tfoot v-if="filtered.length" style="height: 50px">
-      <td colspan="6" style="margin-top: 10px">
-        <div class="pagination" style="display: flex">
+    <tfoot v-if="filtered.length">
+      <td colspan="6">
+        <div class="pagination flex">
           <button @click="curPage && curPage--">
             <Icon name="arrow-left" />
           </button>
@@ -104,39 +102,28 @@ const status = {
 
 <style lang="scss">
 @import '@/css/vars.scss';
+@import '@/css/style.scss';
 
 .table-nav {
-  display: block;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 
-  #search-input {
-    position: relative;
+  .search-input {
+    padding: 0 20px 0 40px;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    font-size: 18px;
+    background: url("@/assets/icons/search.svg") no-repeat 7px 7px;
 
-    &:before {
-      content: "";
-      position: absolute;
-      left: 10px;
-      top: 8px;
-      height: 24px;
-      width: 24px;
-      background: url("@/assets/icons/search.svg");
-    }
-
-    input {
-      padding: 0 20px 0 40px;
-      border-radius: 10px;
-      border: 1px solid $border-color;
-      font-size: 18px;
-      height: 42px;
-
-      &:focus {
-        outline: none;
-      }
+    &:focus {
+      outline: none;
     }
   }
 
   .icon-btn {
+    @extend %center;
     width: 40px;
-    height: 40px;
     border: none;
     background: $bg-color;
     border-radius: 10px;
@@ -170,6 +157,10 @@ table.table-border {
     padding: 0 10px;
   }
 
+  thead, tfoot {
+    height: 50px;
+  }
+
   tbody {
     font-size: 14px;
 
@@ -181,13 +172,14 @@ table.table-border {
   }
 
   .pagination button {
+    @extend %center;
     width: 30px;
     height: 30px;
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, .1);
     background: white;
     cursor: pointer;
-    margin-left: 5px;
+    margin: 0 3px;
 
     &:hover {
       background: $bg-color;
