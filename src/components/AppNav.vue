@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!isCollapsed" class="sidebar">
+  <aside v-show="!isCollapsed" class="sidebar">
     <RouterLink to="/" class="nav-header">
       <Icon name="logo" />
       <span class="logo-text">Сим Центр</span>
@@ -33,24 +33,22 @@
     <div class="nav-footer">
       <div class="user-panel">
         <div>
-          <div style="font-weight: 800; font-size: 15px">Барнаби Мармадюк</div>
-          <div style="font-weight: 500; font-size: 13px; color: gray; margin-top: 5px;">
-            Преподаватель
-          </div>
+          <div class="user-name">Барнаби Мармадюк</div>
+          <div class="user-role">Преподаватель</div>
         </div>
         <div class="user-icon">БМ</div>
       </div>
-      <RouterLink to="/login" class="nav-item" style="margin: 5px 0">
+      <RouterLink to="/login" class="nav-item">
         <Icon name="logout" />Выйти
       </RouterLink>
       <div class="lang-combobox">
         <Icon name="flag-ru" />
-        <span style="margin-left: 10px; vertical-align: super">Русский</span>
+        <span class="lang-name">Русский</span>
         <Icon name="arrow-down" style="float: right" />
       </div>
       <div class="version-info">Версия 1.02</div>
     </div>
-  </div>
+  </aside>
   <button class="collapse" @click="isCollapsed = !isCollapsed"
     :title="(!isCollapsed ? 'Скрыть' : 'Показать') + ' меню'">
     <Icon v-show="!isCollapsed" name="arrow-left" />
@@ -151,6 +149,18 @@ const isCollapsed = ref(false)
   border-radius: 14px;
   box-shadow: $border-color 0 0 10px;
   margin-bottom: 10px;
+
+  .user-name {
+    font-weight: 800;
+    font-size: 15px;
+  }
+
+  .user-role {
+    font-weight: 500;
+    font-size: 13px;
+    color: gray;
+    margin-top: 5px;
+  }
 }
 
 .user-icon {
@@ -173,10 +183,15 @@ const isCollapsed = ref(false)
   font-weight: 600;
   padding: 10px;
   cursor: pointer;
+  margin: 10px 0;
+
+  .lang-name {
+    margin-left: 10px;
+    vertical-align: super;
+  }
 }
 
 .version-info {
   color: grey;
-  margin-top: 18px;
 }
 </style>

@@ -1,91 +1,21 @@
 <template>
-  <div class="table-nav">
-    <span style="font-weight: 700; font-size: 20px">Учебные сессии</span>
-    <div class="flex">
-      <input class="search-input" type="text" placeholder="Поиск" v-model="search">
-      <button class="icon-btn">
-        <Icon name="filter" />
-      </button>
-      <button class="icon-btn">
-        <Icon name="sort" />
-      </button>
-      <button class="add-btn">Создать</button>
-    </div>
-  </div>
-  <table class="table-border">
-    <thead>
-      <tr>
-        <SortColumn label="Дата и время" width="170"/>
-        <SortColumn label="Статус" width="130"/>
-        <SortColumn label="Название учебного модуля"/>
-        <SortColumn label="Тип сессии" width="150"/>
-        <SortColumn label="Комната" width="220"/>
-        <SortColumn label="Группа" width="200"/>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(rec, i) in page" style="height: 60px" :style="{ background: i % 2 == 1 ? '$bg-color' : 'white' }">
-        <td>{{ dateFormat(rec) }}</td>
-        <td>
-          <span class="status-col" :style="{ background: status[rec.status.name].color }">
-            {{ status[rec.status.name].text }}
-          </span>
-        </td>
-        <td>{{ rec.module }}</td>
-        <td>{{ session[rec.type.name] }}</td>
-        <td>{{ rec.rooms.map(r => r.name).join(', ') }}</td>
-        <td>{{ rec.groups.map(r => r.name).join(', ') }}</td>
-      </tr>
-      <tr v-if="!filtered.length">
-        <td colspan="6" style="text-align: center; padding: 10px 0;">Нет данных</td>
-      </tr>
-    </tbody>
-    <tfoot v-if="filtered.length">
-      <td colspan="6">
-        <div class="pagination flex">
-          <button @click="curPage && curPage--">
-            <Icon name="arrow-left" />
-          </button>
-          <button v-for="num in pageNum" @click="curPage = num - 1" :class="{ 'cur-page': curPage === num - 1 }">
-            {{ num }}
-          </button>
-          <button @click="curPage != pageNum - 1 && curPage++">
-            <Icon name="arrow-right" />
-          </button>
-        </div>
-      </td>
-    </tfoot>
-  </table>
+  <DataTable :data="records" mainCol="module" title="Учебные сессии" @add="console.log('adding')" :cols="[
+    { label: 'Дата и время', width: 170, value: rec => dateTimeFormat(rec) },
+    { label: 'Статус', width: 130, value: rec => statusText[rec.status.name], colors: statusColor },
+    { label: 'Название учебного модуля', value: rec => rec.module },
+    { label: 'Тип сессии', width: 150, value: rec => session[rec.type.name] },
+    { label: 'Комната', width: 220, value: rec => rec.rooms.map(r => r.name).join(', ') },
+    { label: 'Группа', width: 200, value: rec => rec.groups.map(r => r.name).join(', ') },
+  ]" />
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
+import { dateTimeFormat } from '@/utils/formatter.js'
 import data from '@/data.json'
-import Icon from '@/ui/Icon.vue';
-import SortColumn from '@/components/SortColumn.vue';
+import DataTable from '@/components/DataTable.vue';
 
 const records = ref(data.sessions ?? [])
-
-const curPage = ref(0)
-const search = ref('')
-
-const filtered = computed(() => {
-  if (search.value.trim()) {
-    curPage.value = 0
-    return records.value.filter(it => it.module.includes(search.value.trim()))
-  }
-  return records.value
-})
-
-const ITEMS_IN_PAGE = 11
-
-const pageNum = computed(() => ~~(filtered.value.length / ITEMS_IN_PAGE) + 1)
-const page = computed(() => filtered.value.slice(curPage.value * ITEMS_IN_PAGE, (curPage.value + 1) * ITEMS_IN_PAGE))
-
-const dateFormat = (rec) => {
-  const time = rec.start.slice(11, 16) + ' - ' + rec.end.slice(11, 16)
-  return new Date(rec.start).toLocaleDateString() + ', ' + time
-}
 
 const session = {
   accreditation: 'Аккредитация',
@@ -93,102 +23,15 @@ const session = {
   examination: 'Экзамен',
 }
 
-const status = {
-  planned: { text: 'Запланировано', color: '#AFBFF5' },
-  completed: { text: 'Завершено', color: '#91C893' },
-  canceled: { text: 'Отменено', color: '#FFDAA1' },
+const statusText = {
+  planned: 'Запланировано',
+  completed: 'Завершено',
+  canceled: 'Отменено',
+}
+
+const statusColor = {
+  Запланировано: '#AFBFF5',
+  Завершено: '#91C893',
+  Отменено: '#FFDAA1',
 }
 </script>
-
-<style lang="scss">
-@import '@/css/vars.scss';
-@import '@/css/style.scss';
-
-.table-nav {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  .search-input {
-    padding: 0 20px 0 40px;
-    border-radius: 10px;
-    border: 1px solid $border-color;
-    font-size: 18px;
-    background: url("@/assets/icons/search.svg") no-repeat 7px 7px;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .icon-btn {
-    @extend %center;
-    width: 40px;
-    border: none;
-    background: $bg-color;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-
-  .add-btn {
-    height: 40px;
-    border-radius: 10px;
-    border: none;
-    background: $primary-color;
-    font-size: 15px;
-    font-weight: 600;
-    color: white;
-    cursor: pointer;
-    padding: 0 17px;
-    margin-left: 14px;
-  }
-}
-
-table.table-border {
-  border-radius: 15px;
-  border: 2px solid #E8EAEC;
-  margin-top: 28px;
-  background: #F5F7F9;
-  width: 100%;
-  border-spacing: 0px;
-
-  td {
-    padding: 0 10px;
-  }
-
-  thead, tfoot {
-    height: 50px;
-  }
-
-  tbody {
-    font-size: 14px;
-
-    .status-col {
-      border-radius: 15px;
-      text-align: center;
-      padding: 7px 10px;
-    }
-  }
-
-  .pagination button {
-    @extend %center;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, .1);
-    background: white;
-    cursor: pointer;
-    margin: 0 3px;
-
-    &:hover {
-      background: $bg-color;
-    }
-  }
-
-  .cur-page {
-    color: $primary-color;
-    border: 1px solid $primary-color !important;
-  }
-}
-</style>

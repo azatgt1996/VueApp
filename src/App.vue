@@ -5,11 +5,11 @@ import AppNav from '@/components/AppNav.vue';
 
 <template>
   <AppNav />
-  <div class="back-panel">
+  <main class="back-panel">
     <div class="content">
       <RouterView />
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="scss">

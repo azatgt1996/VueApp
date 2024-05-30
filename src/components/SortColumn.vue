@@ -12,7 +12,7 @@ import {ref} from 'vue';
 import Icon from '@/ui/Icon.vue';
 
 const props = defineProps({
-  width: String,
+  width: Number,
   label: String,
 })
 
