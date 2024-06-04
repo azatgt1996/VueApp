@@ -9,7 +9,7 @@
       <button class="icon-btn">
         <Icon name="sort" />
       </button>
-      <button class="add-btn" @click="emit('add')">Создать</button>
+      <button class="primary-btn" @click="emit('add')">Создать</button>
     </div>
   </div>
   <table class="table-border">
@@ -93,18 +93,6 @@ const page = computed(() => filtered.value.slice(curPage.value * p.pageSize, (cu
     font-size: 20px;
   }
 
-  .search-input {
-    padding: 0 20px 0 40px;
-    border-radius: 10px;
-    border: 1px solid $border-color;
-    font-size: 18px;
-    background: url("@/assets/icons/search.svg") no-repeat 7px 7px;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
   .icon-btn {
     @extend %center;
     width: 40px;
@@ -113,19 +101,6 @@ const page = computed(() => filtered.value.slice(curPage.value * p.pageSize, (cu
     border-radius: 10px;
     cursor: pointer;
     margin-left: 10px;
-  }
-
-  .add-btn {
-    height: 40px;
-    border-radius: 10px;
-    border: none;
-    background: $primary-color;
-    font-size: 15px;
-    font-weight: 600;
-    color: white;
-    cursor: pointer;
-    padding: 0 17px;
-    margin-left: 14px;
   }
 }
 

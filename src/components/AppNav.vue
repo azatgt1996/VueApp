@@ -41,11 +41,10 @@
       <RouterLink to="/login" class="nav-item">
         <Icon name="logout" />Выйти
       </RouterLink>
-      <div class="lang-combobox">
-        <Icon name="flag-ru" />
-        <span class="lang-name">Русский</span>
-        <Icon name="arrow-down" style="float: right" />
-      </div>
+      <select class="select-lang">
+        <option value="ru">Русский</option>
+        <option value="en">English</option>
+      </select>
       <div class="version-info">Версия 1.02</div>
     </div>
   </aside>
@@ -174,21 +173,10 @@ const isCollapsed = ref(false)
   margin-left: 10px;
 }
 
-.lang-combobox {
-  display: block;
-  height: 24px;
-  border: 1px solid $border-color;
-  border-radius: 12px;
-  font-size: 17px;
+.select-lang {
   font-weight: 600;
-  padding: 10px;
-  cursor: pointer;
   margin: 10px 0;
-
-  .lang-name {
-    margin-left: 10px;
-    vertical-align: super;
-  }
+  height: 46px !important;
 }
 
 .version-info {
